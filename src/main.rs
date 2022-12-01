@@ -12,19 +12,13 @@ fn main() {
     // This should be called with two command line arguments,
     // both file names. The first should be the name of a file
     // containing the text to disemvowel, and the second should
-    // be the file we want to write the disemvoweled text to.
+    // be the file we want to write the disemvoweled text to
     let args: Vec<String> = env::args().collect();
 
-    //DONE TODO: Panic if not enough arguments are provided 
-    //Panic should output the string "Not enough arguments"
+    // We'll panic if we don't get the right number of arguments
     if args.len() < 3 {
         panic!("Not enough arguments");
     }
-
-    //DONE TODO:
-    //  * Pass an argument to read_file to read the original text
-    //  * Pass that to disemvowel to remove the vowels
-    //  * Write the disemvoweled text using write_file
 
     // Read the original text
     let original_text = read_file(Path::new(&args[1]));
@@ -37,14 +31,17 @@ fn main() {
 
 }
 
+// This function reads a file into a String, and returns the String
 fn read_file(path: &Path) -> String {
     fs::read_to_string(path).expect("Could not read the file")
 }
+
+// This function takes a String and returns a new String with the vowels removed
 fn write_file(path: &Path, s: &str) {
     fs::write(path, s).expect("Unable to write file");
 }
 
-//DONE TODO: Return the input string without vowels.
+// This function disemvowels a string, returning a new string
 fn disemvowel(s: &str) -> String {
     let mut disemvoweled = String::from(s);
     disemvoweled.retain(|c| !is_vowel(c));
@@ -52,6 +49,7 @@ fn disemvowel(s: &str) -> String {
     
 }
 
+// This function returns true if a character is a vowel
 fn is_vowel(c: char) -> bool {
     match c {
         'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => true,
@@ -59,13 +57,7 @@ fn is_vowel(c: char) -> bool {
     }
 }
 
-// Everything from here down is Rust test code. You shouldn't need to
-// change any of this.
-//
-// Use `cargo test` to run all these tests. All the tests will initially
-// fail because there's no definition for the `disemvowel` function. Add
-// that up above and work to get the tests to pass. See the lab write-up
-// for some tips.
+// Everything from here down is Rust test code. 
 
 #[cfg(test)]
 mod tests {
